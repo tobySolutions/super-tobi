@@ -1,0 +1,87 @@
+# ─── Personal data (never commit) ───
+data/career/intel/
+data/career/jobs/cover_letters/
+data/career/jobs/video_scripts/
+data/career/resume/
+data/career/war_plan.md
+data/career/skills_log.json
+config/api_keys.env
+config/google_credentials.json
+config/google_token.json
+config/google_token.json.bak
+config/telegram_owner.json
+data/career/jobs/applications.json
+data/career/jobs/follow_ups/
+data/career/grants/
+data/relationships/
+data/finance/
+data/email_triage.json
+data/message_digests.json
+data/messages_log.json
+data/writing/voice/
+data/writing/drafts/
+data/writing/research/
+data/health/*.json
+data/usage/
+data/content/twitter_feed.json
+
+# ─── Pi extensions (personal) ───
+.pi/
+
+# ─── Build artifacts ───
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+.next/
+.vercel/
+
+# ─── Screenshots & proof images (job applications) ───
+*.png
+*.jpg
+*.jpeg
+snapshot_country.md
+glassdoor_snapshot.md
+greenhouse_form.md
+form_*.png
+
+# ─── Logs (keep structure, not content) ───
+logs/*.log
+logs/*.json
+logs/session_*.md
+logs/screenshots/
+logs/applications/
+
+# ─── Playwright MCP cache ───
+.playwright-mcp/
+
+# ─── OS files ───
+.DS_Store
+Thumbs.db
+
+# ─── Subprojects with their own repos ───
+proof-editor/
+projects/
+
+# ─── Launchd plists (macOS-specific) ───
+scripts/com.supertobi.*.plist
+
+# ─── Misc generated ───
+supertobi
+apply_job.mjs
+
+# ─── Personal life data ───
+life_systems_map_v1.md
+data/trends/
+data/entertainment/
+data/content/
+data/learning/*.json
+data/writing/proof_sessions.json
+data/ideas/backlog.json
+
+# ─── Lock files ───
+package-lock.json
+
+# ─── Snapshots ───
+logs/vercel_snapshot*.md
+logs/next_session_handoff.md

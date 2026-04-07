@@ -1,0 +1,64 @@
+# Super Tobi — Global Settings
+
+owner:
+  name: Tobiloba
+  site: tobysolutions.dev
+  location: Lagos, Nigeria
+  role: AI Researcher @ Idealik
+  linkedin: https://www.linkedin.com/in/tobiloba-adedeji
+
+# API Keys — add as you set them up
+# NEVER commit actual keys. Use environment variables.
+api_keys:
+  twitter: ${TWITTER_API_KEY}
+  linkedin: ${LINKEDIN_API_KEY}
+  youtube: ${YOUTUBE_API_KEY}
+  telegram: ${TELEGRAM_BOT_TOKEN}
+  discord: ${DISCORD_BOT_TOKEN}
+  github: ${GITHUB_PAT}
+  notion: ${NOTION_API_KEY}
+  google_calendar: ${GOOGLE_CALENDAR_CREDENTIALS}
+
+# Preferences
+writing:
+  default_tone: direct, personal, technical
+  avoid: corporate jargon, AI-sounding phrases, filler words
+
+content:
+  platforms:
+    - twitter
+    - youtube
+    - tiktok
+    - linkedin
+    - blog (tobysolutions.dev)
+  types:
+    - vlogs
+    - demos
+    - building cool stuff
+    - music content
+
+learning:
+  daily_time_budget_minutes: 120
+  preferred_schedule: morning
+
+health:
+  workout_location: home
+  daily_cadence: true
+  goal: weight_loss_and_fitness
+
+career:
+  target_roles:
+    - AI Engineer
+    - ML Engineer
+    - Solana Developer
+    - Rust Developer
+    - Full-Stack Engineer
+    - Frontend Engineer
+    - Backend Engineer
+  target_companies: []  # Add specific companies
+  freelance_platforms: []  # Add platforms you use
+
+finance:
+  bank: GTBank
+  crypto_service: collectdots
+  currency: NGN

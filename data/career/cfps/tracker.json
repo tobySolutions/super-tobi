@@ -1,0 +1,74 @@
+[
+  {
+    "id": "cfp-001",
+    "name": "Africa Deep Tech Conference 2026",
+    "organization": "Africa Deep Tech Foundation",
+    "type": "cfp",
+    "deadline": "Check website",
+    "url": "https://africadeeptech.org/conference-2026/",
+    "amount": null,
+    "status": "discovered",
+    "discovered_date": "2026-03-20",
+    "notes": "Pan-African conference for builders, founders, funders, policymakers, and researchers. Covers AI, robotics, quantum computing, biotech, web3, XR. Speaker opportunities available. Strong fit for AI researcher + Solana builder profile."
+  },
+  {
+    "id": "cfp-002",
+    "name": "Tech Revolution Africa 2026",
+    "organization": "Tech Revolution Africa",
+    "type": "cfp",
+    "deadline": "Check website (event: Jan 30-31, 2026 - may have passed)",
+    "url": "https://techrevolutionafrica.org/",
+    "amount": null,
+    "status": "discovered",
+    "discovered_date": "2026-03-20",
+    "notes": "Lagos, Nigeria at Landmark Event Center. Brings together founders, leaders, investors, government reps. Event date Jan 30-31 may have already passed - check for future editions."
+  },
+  {
+    "id": "cfp-003",
+    "name": "Tech Unite Africa 2026",
+    "organization": "Tech Unite Africa / Startup World Cup",
+    "type": "cfp",
+    "deadline": "Check website",
+    "url": "https://techuniteafrica.com/",
+    "amount": "$1,000,000 investment prize (Startup World Cup Grand Finale)",
+    "status": "discovered",
+    "discovered_date": "2026-03-20",
+    "notes": "3rd Nigeria Regional of Startup World Cup. Winner advances to Grand Finale in San Francisco for $1M investment. Panels on Fintech, AI, Cybersecurity, Cloud, Startup Growth."
+  },
+  {
+    "id": "cfp-004",
+    "name": "Lagos Tech Fest 2026",
+    "organization": "EventHive",
+    "type": "cfp",
+    "deadline": "Check website",
+    "url": "https://tech.eventhive.ng/",
+    "amount": null,
+    "status": "discovered",
+    "discovered_date": "2026-03-20",
+    "notes": "Annual Nigeria tech leadership event. C-level executives, government representatives, decision makers. Local Lagos event - easy to attend."
+  },
+  {
+    "id": "cfp-005",
+    "name": "AfricaTech Conference 2026",
+    "organization": "Africa Tech Festival",
+    "type": "cfp",
+    "deadline": "Check website",
+    "url": "https://africatechfestival.com/africatech/",
+    "amount": null,
+    "status": "discovered",
+    "discovered_date": "2026-03-20",
+    "notes": "Nov 17-19, 2026 at Cape Town International Convention Centre. Major pan-African tech conference. Speaker CFP likely open mid-2026."
+  },
+  {
+    "id": "cfp-006",
+    "name": "AI for Science Master's Program (AIMS / Google DeepMind)",
+    "organization": "AIMS South Africa / Google DeepMind",
+    "type": "cfp",
+    "deadline": "Check website (September 2026 cohort)",
+    "url": "https://www2.fundsforngos.org/research/submissions-open-for-the-ai-for-science-masters-program-in-africa/",
+    "amount": "Fully funded (tuition, living, flights, research)",
+    "status": "discovered",
+    "discovered_date": "2026-03-20",
+    "notes": "Fully funded 1-year residential master's combining AI/ML with science applications. 40 Google DeepMind Scholars. Strong fit for AI researcher profile."
+  }
+]
