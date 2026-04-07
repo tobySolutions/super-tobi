@@ -1,14 +1,14 @@
 # super-tobi
 
-**A personal operating system built on Claude Code.**
+A personal operating system built on Claude Code.
 
 ```
-$ super status
+$ /status
 
 ╔══════════════════════════════════════════╗
 ║         ⚡ SUPER TOBI — SYSTEM STATUS    ║
 ╠══════════════════════════════════════════╣
-  💼 CAREER    12 applied · 3 interviews · 2 follow-ups due
+  💼 CAREER    34 applied · 3 interviews · 2 follow-ups overdue
   📚 LEARNING  system design (day 14) · streak: 8 days
   ✍️  WRITING   2 drafts · 1 published this week
   💪 HEALTH    4/5 workouts · upper body today
@@ -17,340 +17,197 @@ $ super status
 ╚══════════════════════════════════════════╝
 ```
 
-Super Tobi is a **personal AI operating system** — not a chatbot, not an assistant, not a wrapper. It's a filesystem-native system of agents, scripts, automations, and data that runs your life through Claude Code.
-
-The `CLAUDE.md` file is the kernel. Slash commands are the CLI. Python scripts are the daemons. Your data is files and folders. Claude is the runtime.
-
 ---
 
-## Why this exists
+## What this is
 
-I was using Claude Code for coding. Then I started using it for job applications. Then content writing. Then email triage. Then tracking finances. Then managing my learning schedule.
+I was using Claude Code for job applications. Then email triage. Then writing articles in my voice. Then tracking workouts, finances, learning goals, messages across 4 platforms. Each piece worked, but every new session started blank — all context gone.
 
-At some point I realized: I wasn't using an AI assistant — I was building an **operating system**.
+So I stopped treating Claude like a conversation and started treating it like a runtime. Gave it a filesystem for state. Scripts for heavy lifting. A config file that defines who I am. Slash commands as the interface.
 
-The problem with AI assistants is that they're stateless. You start a conversation, get an answer, close the tab. Nothing persists. Nothing connects. Nothing runs in the background.
+The result is an operating system:
 
-Super Tobi is the opposite:
-- **State lives in files.** Job applications are JSON. Drafts are versioned markdown. Health logs are append-only.
-- **Agents run as processes.** The job hunter, email triager, and content writer are independent scripts that can run on schedules.
-- **Commands are composable.** `/apply jobs` → `/write cover-letter` → `/follow-up` is a pipeline, not three separate conversations.
-- **Everything is auditable.** Logs, session history, application records — you can trace every decision the system made.
-
----
+- **`CLAUDE.md`** is the kernel — edit this file, the whole system changes
+- **`.claude/commands/`** — 19 slash commands (the CLI)
+- **`scripts/`** — 23+ Python programs (the daemons)
+- **`data/`** — JSON + markdown files (the filesystem, no database)
+- **`config/`** — settings + API keys
+- **`logs/`** — append-only history
 
 ## Architecture
 
 ```
 super-tobi/
-├── CLAUDE.md                 # The kernel — identity, rules, architecture
+├── CLAUDE.md                   # Kernel — identity, rules, voice, architecture
 ├── config/
-│   ├── settings.yaml         # Global preferences
-│   └── api_keys.env          # API keys (gitignored)
-│
-├── .claude/commands/         # Slash commands (the CLI)
-│   ├── status.md             #   /status — system dashboard
-│   ├── daily-sync.md         #   /daily-sync — morning briefing
-│   ├── apply.md              #   /apply — job/grant/CFP applications
-│   ├── write.md              #   /write — auto-writer pipeline
-│   ├── learn.md              #   /learn — learning system
-│   ├── health.md             #   /health — fitness tracking
-│   ├── finance.md            #   /finance — money tracking
-│   ├── twitter.md            #   /twitter — feed & posting
-│   ├── ideas.md              #   /ideas — idea backlog
-│   ├── messages.md           #   /messages — multi-platform inbox
-│   ├── network.md            #   /network — relationship management
-│   ├── remind.md             #   /remind — reminders
-│   ├── content.md            #   /content — content calendar
-│   ├── war-plan.md           #   /war-plan — career offensive
-│   ├── follow-up.md          #   /follow-up — chase pending items
-│   └── mass-apply.md         #   /mass-apply — batch applications
-│
-├── scripts/                  # Python daemons & utilities
-│   ├── cli.py                #   Rich-powered terminal dashboard
-│   ├── job_hunter.py         #   Auto job discovery & application
-│   ├── email_triage.py       #   Gmail categorization & surfacing
-│   ├── twitter_feed.py       #   Twitter API integration
-│   ├── telegram_bot.py       #   Telegram command interface
-│   ├── trading.py            #   Market data & signals
-│   ├── entertainment.py      #   Movie/music recommendations
-│   ├── language_learn.py     #   Language learning sessions
-│   ├── company_intel.py      #   Company research for applications
-│   ├── resume_tailor.py      #   ATS-optimized, per-job resume generation
-│   ├── outreach.py           #   Cold outreach & follow-up messages
-│   ├── analytics.py          #   Application funnel analytics
-│   ├── interview_prep.py     #   AI-powered mock interviews
-│   ├── creative_aggregator.py #  Content ideas from trends
-│   ├── message_aggregator.py  #  Multi-platform message inbox
-│   ├── subscription_tracker.py # Track subscriptions & costs
-│   ├── tax_tracker.py        #   Tax compliance (Nigeria)
-│   └── ...20+ more
-│
-├── data/                     # All state (files = database)
-│   ├── career/
-│   │   ├── jobs/             #   Application tracker, follow-ups
-│   │   ├── cfps/             #   Conference proposals
-│   │   └── grants/           #   Grant applications, YC draft
-│   ├── learning/             #   Progress, plans, streaks
-│   ├── writing/
-│   │   ├── drafts/           #   Versioned drafts (v1, v2, v3…)
-│   │   ├── research/         #   Source material
-│   │   └── voice/            #   Writing samples for voice training
-│   ├── health/               #   Workout logs, plans
-│   ├── finance/              #   Income, expenses, budgets
-│   ├── ideas/                #   Startup/product idea backlog
-│   ├── content/              #   Content calendar, analytics
-│   ├── relationships/        #   Birthdays, contacts
-│   └── trends/               #   Aggregated market/industry trends
-│
-├── processes/                # Running process definitions
-├── logs/                     # Append-only system logs
-└── life_systems_map_v1.md    # Master life goals document
+│   ├── settings.yaml           # Preferences
+│   └── api_keys.env            # Keys (gitignored)
+├── .claude/commands/           # CLI — 19 commands
+│   ├── status.md               # /status
+│   ├── daily-sync.md           # /daily-sync
+│   ├── apply.md                # /apply jobs|cfps|grants
+│   ├── write.md                # /write {idea}
+│   ├── learn.md                # /learn {topic}
+│   ├── war-plan.md             # /war-plan
+│   ├── analytics.md            # /analytics
+│   ├── outreach.md             # /outreach
+│   ├── interview-prep.md       # /interview-prep
+│   ├── health.md               # /health
+│   ├── finance.md              # /finance
+│   ├── twitter.md              # /twitter
+│   ├── ideas.md                # /ideas
+│   ├── messages.md             # /messages
+│   ├── network.md              # /network
+│   ├── remind.md               # /remind
+│   ├── content.md              # /content
+│   ├── follow-up.md            # /follow-up
+│   └── mass-apply.md           # /mass-apply
+├── scripts/                    # Daemons — 23+ Python
+│   ├── job_hunter.py           # Scan boards, fetch JDs, score
+│   ├── resume_tailor.py        # ATS keyword extraction, per-job CV
+│   ├── auto_apply.py           # Browser automation (Playwright)
+│   ├── analytics.py            # Funnel conversion, velocity
+│   ├── outreach.py             # Cold emails, LinkedIn DMs, follow-ups
+│   ├── interview_prep.py       # Mock interviews, answer coaching
+│   ├── company_intel.py        # Glassdoor, Reddit, culture research
+│   ├── email_triage.py         # Gmail categorization
+│   ├── twitter_feed.py         # Twitter API (twitterapi.io)
+│   ├── telegram_bot.py         # Mobile command interface
+│   ├── cli.py                  # Rich terminal dashboard
+│   ├── trading.py              # Market signals
+│   ├── language_learn.py       # Hindi, Spanish, etc.
+│   ├── entertainment.py        # Movie/music recommendations
+│   ├── creative_aggregator.py  # Content ideas from trends
+│   ├── message_aggregator.py   # Multi-platform inbox
+│   ├── subscription_tracker.py # Track subscriptions
+│   ├── tax_tracker.py          # Nigerian tax compliance
+│   └── ...more
+├── data/                       # State — files are the database
+│   ├── career/jobs/            # Applications, JDs, follow-ups
+│   ├── career/intel/           # Per-company research
+│   ├── career/resume/          # Base + tailored resumes
+│   ├── learning/               # Progress, plans, streaks
+│   ├── writing/{drafts,voice}/ # Versioned drafts, voice samples
+│   ├── health/                 # Workout logs
+│   ├── finance/                # Income, expenses
+│   ├── ideas/                  # Backlog with scoring
+│   ├── relationships/          # Birthdays, contacts
+│   └── content/                # Calendar, analytics
+├── logs/                       # Append-only
+└── life_systems_map_v1.md      # Master life goals
 ```
 
 ---
 
-## The Slash Command System
-
-Every command is a markdown file in `.claude/commands/` that defines how Claude should behave when you type it. They're not prompts — they're **system definitions** with data flows, output formats, and error handling.
+## Commands
 
 | Command | What it does |
 |---------|-------------|
-| `/status` | Full system dashboard — all domains at a glance |
-| `/daily-sync` | Morning briefing — birthdays, career pipeline, workout, finance |
-| `/apply jobs` | Find jobs, score fit, tailor CV, draft cover letter, track |
-| `/apply cfps` | Find conferences, draft talk proposals |
-| `/apply grants` | Find grants, draft applications |
-| `/write {idea}` | Full writing pipeline — research → outline → draft → review |
-| `/learn {topic}` | Create learning plan, track progress, generate exercises |
-| `/learn quiz {topic}` | Knowledge check targeting weak areas |
-| `/health log` | Log workout, track streak |
-| `/finance track` | Log income/expenses, show budget |
-| `/twitter feed` | Pull mentions, trending topics, own tweet performance |
-| `/ideas add {idea}` | Add to backlog with auto-scoring |
-| `/war-plan` | Career offensive — daily action items, pipeline health, YC countdown |
-| `/follow-up` | Chase overdue applications, emails, tasks |
+| `/status` | Life dashboard — all domains at a glance |
+| `/daily-sync` | Morning briefing: birthdays, career pipeline, workout, finance, YC countdown |
+| `/apply jobs` | Find → score → tailor CV → apply → track |
+| `/apply cfps` | Conference proposals |
+| `/apply grants` | Grant applications |
+| `/write {idea}` | Research → outline → draft in your voice → review |
+| `/learn {topic}` | Learning plans, progress tracking, streaks, quizzes |
+| `/war-plan` | Career offensive: 3 actions today, conversion rates, overdue follow-ups |
 | `/analytics` | Application funnel, board performance, velocity, rejection analysis |
-| `/outreach` | Cold LinkedIn/email/Twitter DMs to hiring managers |
-| `/interview-prep` | AI-generated questions, mock interviews, answer coaching |
-| `/messages` | Aggregate Telegram, Discord, WhatsApp, email |
+| `/outreach` | Cold LinkedIn/email/Twitter DMs, batch follow-ups |
+| `/interview-prep` | Role-specific questions, mock interviews, answer coaching |
+| `/health` | Workout plans, logging, streaks |
+| `/finance` | Income, expenses, budgets |
+| `/twitter` | Feed, mentions, trending, draft tweets |
+| `/ideas` | Backlog with auto-scoring |
+| `/messages` | Telegram + Discord + WhatsApp + email in one view |
+| `/follow-up` | Chase overdue applications, emails, tasks |
+| `/network` | Relationship management, recruiter outreach |
+| `/remind` | Birthdays, deadlines, custom reminders |
 
 ---
 
 ## The Career Pipeline
 
-The most battle-tested part of Super Tobi. A full autonomous job search system:
+The most battle-tested part. End-to-end autonomous job search:
 
 ```
-Discovery → Scoring → Intel → Tailoring → Application → Follow-up → Interview Prep
+Discovery → Scoring → Intel → Tailoring → Application → Outreach → Analytics → Interview Prep
 ```
 
 | Stage | Script | What it does |
 |-------|--------|-------------|
-| **Discovery** | `job_hunter.py` | Searches 10+ boards (RemoteOK, Web3Career, Himalayas, CryptoJobsList, Twitter/X, Big Tech career pages, Fortune 500, Google/Brave) |
-| **Scoring** | `job_hunter.py` | Scores 0-100 on role fit, tech match, location, seniority, salary |
-| **Intel** | `company_intel.py` | Gathers Reddit culture threads, Glassdoor reviews, interview prep from Brave Search |
-| **Tailoring** | `resume_tailor.py` | ATS keyword extraction, per-job resume rewriting, before/after scoring |
-| **Application** | `auto_apply.py` | Playwright browser automation with Greenhouse email verification |
-| **Follow-up** | `outreach.py` | LinkedIn DMs, cold emails, Twitter DMs, batch follow-ups |
-| **Analytics** | `analytics.py` | Funnel conversion, board performance, score analysis, velocity tracking |
-| **Interview** | `interview_prep.py` | AI-generated questions, mock sessions, answer coaching |
+| Discovery | `job_hunter.py` | 10+ boards: RemoteOK, Web3Career, CryptoJobsList, Twitter/X, Big Tech career pages |
+| Scoring | `job_hunter.py` | 0-100 on role fit, tech match, location, seniority, salary |
+| Intel | `company_intel.py` | Reddit culture threads, Glassdoor reviews, interview prep via Brave Search |
+| Tailoring | `resume_tailor.py` | ATS keyword extraction across 5 domains, per-job CV rewrite, before/after scoring |
+| Application | `auto_apply.py` | Playwright browser automation with Greenhouse verification |
+| Outreach | `outreach.py` | LinkedIn DMs, cold emails, Twitter DMs, batch follow-ups |
+| Analytics | `analytics.py` | Funnel conversion, board performance, score distribution, velocity |
+| Interview | `interview_prep.py` | AI-generated questions from actual JD, mock sessions, answer coaching |
 
-The autonomous cycle (`autonomous_cycle.sh`) runs all of this hourly via launchd:
-1. Hunt for new jobs across all boards
-2. Resolve URLs to direct ATS links
-3. Gather company intelligence on top matches
-4. Auto-apply to top 5 qualifying jobs
-5. Log everything to `applications.json`
+The resume tailor is the one I'm proudest of. It extracts keywords from a job description, scores your current resume against it, then rewrites the resume to maximize ATS compatibility — per job, not generically. I've seen scores go from 38% to 84% on a single tailoring run.
 
 ```bash
-# Manual runs
-.venv/bin/python scripts/job_hunter.py --hunt          # Find jobs
-.venv/bin/python scripts/resume_tailor.py --batch      # Tailor resumes
-.venv/bin/python scripts/auto_apply.py --max 10        # Apply to top 10
-.venv/bin/python scripts/outreach.py --batch-followups  # Follow up on all overdue
-.venv/bin/python scripts/analytics.py --full           # Full analytics report
-.venv/bin/python scripts/interview_prep.py --prep 42   # Prep for job #42
+.venv/bin/python scripts/job_hunter.py --hunt
+.venv/bin/python scripts/resume_tailor.py --batch
+.venv/bin/python scripts/auto_apply.py --max 10
+.venv/bin/python scripts/outreach.py --batch-followups
+.venv/bin/python scripts/analytics.py --full
+.venv/bin/python scripts/interview_prep.py --prep 42
 ```
 
 ---
 
-## The Script Layer
+## Why files instead of a database
 
-Scripts are Python programs that do the heavy lifting. They can run standalone, on cron schedules, or be invoked by slash commands.
+I tried Supabase. Spent two days setting it up. Then realized: Claude Code can't query Supabase. But it can read a JSON file, write markdown, and grep through a directory.
 
-```bash
-# Terminal dashboard
-.venv/bin/python scripts/cli.py status
-
-# Pull Twitter feed
-.venv/bin/python scripts/twitter_feed.py --full
-
-# Triage emails
-.venv/bin/python scripts/email_triage.py
-
-# Discover job opportunities
-.venv/bin/python scripts/job_hunter.py --scan
-
-# Run as macOS daemons (launchd)
-launchctl load scripts/com.supertobi.daemon.plist
-```
+For a personal system with hundreds of files, the filesystem is the correct abstraction. Claude already knows how to navigate it. `git` gives you version control. Every file is human-readable. You can open `data/career/jobs/applications.json` on your phone and see exactly what the system knows.
 
 ---
 
-## Setup — Fork Your Own
-
-### 1. Fork & clone
+## Fork your own
 
 ```bash
-git clone https://github.com/tobySolutions/super-tobi.git my-super
-cd my-super
-```
+git clone https://github.com/tobySolutions/super-tobi.git my-os
+cd my-os
 
-### 2. Create your virtual environment
-
-```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install rich httpx requests playwright
+
+# 1. Edit CLAUDE.md — this is YOUR kernel. Define who you are.
+# 2. Edit config/settings.yaml
+# 3. cp config/api_keys.env.example config/api_keys.env
+# 4. Create life_systems_map_v1.md from the template
+# 5. Open Claude Code. Type /status.
 ```
 
-### 3. Set up your identity
-
-Edit `CLAUDE.md` — replace Tobiloba's identity with yours. This is the most important file. It defines:
-- Who you are
-- What you're optimizing for
-- How the system talks to you
-- How it writes as you
-
-Edit `config/settings.yaml` — your preferences, platforms, goals.
-
-Copy `config/api_keys.env.example` to `config/api_keys.env` and add your keys:
-```bash
-TWITTER_API_KEY=your_key_here
-TELEGRAM_BOT_TOKEN=your_token_here
-GOOGLE_CALENDAR_CREDENTIALS=path_to_creds
-```
-
-### 4. Create your data directories
-
-```bash
-mkdir -p data/{career/jobs,career/cfps,career/grants,learning,writing/{drafts,research,voice},health,finance,ideas,content,relationships,trends}
-```
-
-### 5. Initialize your life systems map
-
-Create `life_systems_map_v1.md` with your goals across all domains. This is the document Super Tobi reads to understand what you're building toward.
-
-### 6. Start using it
-
-Open Claude Code in the project directory. The `CLAUDE.md` file loads automatically. Type any slash command:
-
-```
-/status
-/daily-sync
-/learn system design
-/apply jobs
-/write a blog post about building personal AI systems
-```
+Step 1 is what matters. `CLAUDE.md` defines your identity, goals, voice, and rules. The scripts and commands work for anyone. The kernel makes it yours.
 
 ---
 
-## Design Principles
+## Extending
 
-**Files are the database.** No Postgres, no Redis, no Firebase. JSON files for structured data. Markdown files for text. Append-only logs for history. `git` for versioning. This is intentional — it means your entire life state is portable, readable, and diffable.
+**New command:** Create `.claude/commands/your-command.md` with a process spec. Read from `data/`, do work, write back.
 
-**Commands are composable.** `/apply jobs` finds opportunities. `/write cover-letter` drafts the letter. `/follow-up` chases the response. They share data through files, not through conversation context.
+**New script:** Create `scripts/your_script.py`. Same pattern — read files, call APIs, write results, log everything.
 
-**The kernel is a markdown file.** `CLAUDE.md` isn't a prompt. It's a system specification. It defines identity, architecture, data conventions, voice profiles, and process verbs. When you edit it, you're reconfiguring your OS.
-
-**Agents are scripts, not magic.** Each Python script does one thing well. `job_hunter.py` hunts for jobs. `email_triage.py` triages email. They're readable, debuggable, and replaceable. No framework. No LangChain. Just Python + APIs.
-
-**Privacy by architecture.** All personal data is gitignored by default. API keys are environment variables. The repo you push is the system definition — not your data.
+**New domain:** Create `data/your-domain/` and add it to `CLAUDE.md` so the system knows about it.
 
 ---
 
-## What This Is NOT
+## Built with
 
-- ❌ A chatbot wrapper
-- ❌ A prompt collection
-- ❌ An "awesome Claude" list
-- ❌ A SaaS product
-- ❌ An agent framework
-
-It's a **personal operating system**. You fork it, make it yours, and run your life on it.
-
----
-
-## The Thesis
-
-> Using AI is not enough. You need AI **systems**.
-
-Most people use AI like a search engine with better grammar — type a question, get an answer, close the tab. That's not leverage. That's convenience.
-
-A system is what happens when your AI has:
-- **Persistent state** that survives across sessions
-- **Scheduled processes** that run without you
-- **Data pipelines** that feed one agent's output into another's input
-- **Audit trails** so you can see what happened and why
-
-This is what operating systems do for programs. Super Tobi does it for your life.
-
----
-
-## Extending It
-
-### Add a new command
-
-Create `.claude/commands/your-command.md`:
-
-```markdown
-# /your-command — Description
-
-You are Super Tobi running {description}.
-
-## Process
-1. Read {relevant data files}
-2. Do {the thing}
-3. Output {formatted result}
-4. Save to {data path}
-```
-
-### Add a new script
-
-Create `scripts/your_script.py`. Follow the pattern:
-- Read from `data/`
-- Do work (API calls, processing, etc.)
-- Write results back to `data/`
-- Log to `logs/`
-
-### Add a new data domain
-
-Create `data/your-domain/` and add it to the `CLAUDE.md` architecture section so the system knows about it.
-
----
-
-## Built With
-
-- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) — the AI runtime
-- [Python](https://python.org) + [Rich](https://rich.readthedocs.io/) — scripts and terminal UI
-- [twitterapi.io](https://twitterapi.io) — Twitter integration
-- [Google APIs](https://developers.google.com/) — Gmail, Calendar
-- [Telegram Bot API](https://core.telegram.org/bots) — mobile command interface
-- [Playwright](https://playwright.dev/) — browser automation for job applications
+[Claude Code](https://docs.anthropic.com/en/docs/claude-code) · [Python](https://python.org) + [Rich](https://rich.readthedocs.io/) · [twitterapi.io](https://twitterapi.io) · [Google APIs](https://developers.google.com/) · [Telegram Bot API](https://core.telegram.org/bots) · [Playwright](https://playwright.dev/)
 
 ---
 
 ## License
 
-MIT — fork it, make it yours, run your life on it.
+MIT
 
 ---
 
-## Author
+**Tobiloba Adedeji** · AI Researcher at Idealik · Solana builder · Co-founder, Solana Students Africa
 
-**Tobiloba Adedeji** — AI Researcher, Solana builder, person who got tired of copying data between apps.
-
-- Twitter: [@toby_solutions](https://twitter.com/toby_solutions)
-- Site: [tobysolutions.dev](https://tobysolutions.dev)
-- LinkedIn: [tobiloba-adedeji](https://linkedin.com/in/tobiloba-adedeji)
+[@tobaboradev](https://x.com/tobaboradev) · [tobysolutions.dev](https://tobysolutions.dev) · [linkedin.com/in/tobiloba-adedeji](https://linkedin.com/in/tobiloba-adedeji)
