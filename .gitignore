@@ -37,9 +37,27 @@ __pycache__/
 .vercel/
 
 # ─── Screenshots & proof images (job applications) ───
-*.png
-*.jpg
-*.jpeg
+# Screenshots (job application proof)
+alpaca_*.png
+application_*.png
+asymmetric_*.png
+blocknova_*.png
+crossmint_*.png
+dash-*.png
+form_*.png
+hyrotrader_*.png
+jito_*.png
+loancrate_*.png
+minimal_*.png
+myjobmag_*.png
+okx_*.png
+openai*.png
+rockawayx_*.png
+signup_*.png
+snappycx_*.png
+tether_*.png
+vercel_form_*.png
+apply_page.png
 snapshot_country.md
 glassdoor_snapshot.md
 greenhouse_form.md
