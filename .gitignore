@@ -103,3 +103,5 @@ package-lock.json
 # ─── Snapshots ───
 logs/vercel_snapshot*.md
 logs/next_session_handoff.md
+my-os
+data/writing/assets/

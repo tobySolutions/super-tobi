@@ -76,6 +76,10 @@ super-tobi/
 │   ├── entertainment.py      #   Movie/music recommendations
 │   ├── language_learn.py     #   Language learning sessions
 │   ├── company_intel.py      #   Company research for applications
+│   ├── resume_tailor.py      #   ATS-optimized, per-job resume generation
+│   ├── outreach.py           #   Cold outreach & follow-up messages
+│   ├── analytics.py          #   Application funnel analytics
+│   ├── interview_prep.py     #   AI-powered mock interviews
 │   ├── creative_aggregator.py #  Content ideas from trends
 │   ├── message_aggregator.py  #  Multi-platform message inbox
 │   ├── subscription_tracker.py # Track subscriptions & costs
@@ -126,7 +130,48 @@ Every command is a markdown file in `.claude/commands/` that defines how Claude 
 | `/ideas add {idea}` | Add to backlog with auto-scoring |
 | `/war-plan` | Career offensive — daily action items, pipeline health, YC countdown |
 | `/follow-up` | Chase overdue applications, emails, tasks |
+| `/analytics` | Application funnel, board performance, velocity, rejection analysis |
+| `/outreach` | Cold LinkedIn/email/Twitter DMs to hiring managers |
+| `/interview-prep` | AI-generated questions, mock interviews, answer coaching |
 | `/messages` | Aggregate Telegram, Discord, WhatsApp, email |
+
+---
+
+## The Career Pipeline
+
+The most battle-tested part of Super Tobi. A full autonomous job search system:
+
+```
+Discovery → Scoring → Intel → Tailoring → Application → Follow-up → Interview Prep
+```
+
+| Stage | Script | What it does |
+|-------|--------|-------------|
+| **Discovery** | `job_hunter.py` | Searches 10+ boards (RemoteOK, Web3Career, Himalayas, CryptoJobsList, Twitter/X, Big Tech career pages, Fortune 500, Google/Brave) |
+| **Scoring** | `job_hunter.py` | Scores 0-100 on role fit, tech match, location, seniority, salary |
+| **Intel** | `company_intel.py` | Gathers Reddit culture threads, Glassdoor reviews, interview prep from Brave Search |
+| **Tailoring** | `resume_tailor.py` | ATS keyword extraction, per-job resume rewriting, before/after scoring |
+| **Application** | `auto_apply.py` | Playwright browser automation with Greenhouse email verification |
+| **Follow-up** | `outreach.py` | LinkedIn DMs, cold emails, Twitter DMs, batch follow-ups |
+| **Analytics** | `analytics.py` | Funnel conversion, board performance, score analysis, velocity tracking |
+| **Interview** | `interview_prep.py` | AI-generated questions, mock sessions, answer coaching |
+
+The autonomous cycle (`autonomous_cycle.sh`) runs all of this hourly via launchd:
+1. Hunt for new jobs across all boards
+2. Resolve URLs to direct ATS links
+3. Gather company intelligence on top matches
+4. Auto-apply to top 5 qualifying jobs
+5. Log everything to `applications.json`
+
+```bash
+# Manual runs
+.venv/bin/python scripts/job_hunter.py --hunt          # Find jobs
+.venv/bin/python scripts/resume_tailor.py --batch      # Tailor resumes
+.venv/bin/python scripts/auto_apply.py --max 10        # Apply to top 10
+.venv/bin/python scripts/outreach.py --batch-followups  # Follow up on all overdue
+.venv/bin/python scripts/analytics.py --full           # Full analytics report
+.venv/bin/python scripts/interview_prep.py --prep 42   # Prep for job #42
+```
 
 ---
 
@@ -306,6 +351,6 @@ MIT — fork it, make it yours, run your life on it.
 
 **Tobiloba Adedeji** — AI Researcher, Solana builder, person who got tired of copying data between apps.
 
-- Twitter: [@tobaboradev](https://x.com/tobaboradev)
+- Twitter: [@toby_solutions](https://twitter.com/toby_solutions)
 - Site: [tobysolutions.dev](https://tobysolutions.dev)
 - LinkedIn: [tobiloba-adedeji](https://linkedin.com/in/tobiloba-adedeji)

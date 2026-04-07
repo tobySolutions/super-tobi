@@ -572,6 +572,28 @@ def score_job(job):
     return max(0, min(100, score))
 
 
+def fetch_job_description(url):
+    """Fetch and extract the job description from a URL."""
+    import re
+    try:
+        headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"}
+        r = requests.get(url, headers=headers, timeout=15)
+        if r.status_code != 200:
+            return ""
+        # Strip HTML tags, keep text
+        text = re.sub(r'<script[^>]*>.*?</script>', '', r.text, flags=re.DOTALL)
+        text = re.sub(r'<style[^>]*>.*?</style>', '', text, flags=re.DOTALL)
+        text = re.sub(r'<[^>]+>', '\n', text)
+        text = re.sub(r'\n\s*\n', '\n', text)
+        text = text.strip()
+        # Take a reasonable chunk (job descriptions are usually 500-3000 chars)
+        if len(text) > 5000:
+            text = text[:5000]
+        return text
+    except Exception:
+        return ""
+
+
 def log_application(job, status="discovered"):
     """Log a job to applications tracker."""
     if os.path.exists(APPLICATIONS_FILE):
@@ -593,6 +615,12 @@ def log_application(job, status="discovered"):
     if new_key in existing_keys and new_key != ("", ""):
         return None
 
+    # Fetch job description for ATS scoring later
+    jd = ""
+    url = job.get("url", "")
+    if url and any(d in url for d in ["greenhouse", "lever", "ashby", "workable"]):
+        jd = fetch_job_description(url)
+
     entry = {
         "id": f"job-{len(apps)+1:04d}",
         "type": "job",
@@ -608,6 +636,7 @@ def log_application(job, status="discovered"):
         "applied_date": None,
         "follow_up_date": None,
         "notes": "",
+        "job_description": jd[:3000] if jd else "",
     }
 
     apps.append(entry)
